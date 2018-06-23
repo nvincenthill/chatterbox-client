@@ -4,9 +4,11 @@
     <meta charset="utf-8">
     <title>chatterbox</title>
     <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="styles/animate.css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto" rel="stylesheet">
 
     <!-- dependencies -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/underscore/underscore.js"></script>
 <!--     <script>
@@ -28,17 +30,17 @@
   </head>
   <body>
     
-    <div id="main">
-      <h1>chatterbox</h1>
+    <div id="main" class="animated fadeIn">
+      <h1 class="animated fadeIn">chatterbox</h1>
     </div>
     
 
     
-    <div class='form'>
+    <div class='form animated fadeInLeft'>
       
       <div class="select">
         
-      <p><b>Select a room</b></p>
+      <h2>Select a room</h2>
       
       <select id="select">
         <option id="All" value="All">All</option>
@@ -46,20 +48,25 @@
       </div>
       
       <form id="send" action="" method="get" onsubmit="return false">
-        <p><b>Username</b></p><br>
+        <h2>Username</h2>
         <input id="usernamevalue" type="text" name="firstname" value="Nick">
         <br>
-        <p><b>Room</b></p><br>
-        <input id="roomvalue" type="text" name="lastname" value="4chan">
+        <h2>Room</h2>
+        <input id="roomvalue" type="text" name="lastname" value="">
         <br>
-        <p><b>Message</b></p><br>
-        <input id="messagevalue" type="text" name="lastname" value="Test Message">
+        <h2>Message</h2>
+        <input id="messagevalue" type="text" name="lastname" value="">
         <br><br>
-        <input id="submit" class="submit" type="submit" value="Submit">
-      </form> 
+        <input id="submit" class="submit" type="submit" value="SUBMIT">
+      </form>
+      
+      <h2 class="friendsheader"> My Friends </h1>
+      <div class="friends">
+        <p id="nofriends"> No friends :( </p>
+      </div>
     </div>
   
-    <div id="chats"></div>
+    <div id="chats" class="animated fadeIn"></div>
   </body>
 </html>
 

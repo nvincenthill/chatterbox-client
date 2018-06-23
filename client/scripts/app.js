@@ -1,7 +1,12 @@
-// let username = 'Nick';
 let messages = [];
+let oldMessages = [];
+let friends = [];
+let lastTimeStamp = [];
+let previousRooms = [];
+let rooms = [];
 
 
+// create a chatterbox chat app
 let App = function () {
   this.username;
   this.server = 'http://parse.sfm8.hackreactor.com/chatterbox/classes/messages';
@@ -10,7 +15,6 @@ let App = function () {
 
 // fetch messages from server
 App.prototype.fetch = function() {
-  console.log('fetching data...');
   $.ajax({
     url: this.server,
     data: this.APIparams,
@@ -30,12 +34,22 @@ App.prototype.send = function(data) {
     data: JSON.stringify(data),
     contentType: 'application/json',
     success: function (data) {
-      console.log('chatterbox: Message sent');
+      // console.log('chatterbox: Message sent');
     },
     error: function (data) {
-      console.error('chatterbox: Failed to send message', data);
+      // console.error('chatterbox: Failed to send message', data);
     }
   });
+  
+  app.clearMessages();
+  setTimeout(() => {
+    app.fetch();
+    setTimeout(() => {
+      for (let i = 0; i < messages.results.length; i++) {
+        app.renderMessage(messages.results[i]); 
+      }
+    }, 1000);
+  }, 2000); 
 };
 
 // init app
@@ -50,19 +64,27 @@ App.prototype.clearMessages = function () {
 
 // add messages to the DOM
 App.prototype.renderMessage = function (message) {
-  // console.log(message);
   let messageUsername = message.username;
   let messageText = message.text;
+  messageText = messageText.split('').splice(0, 200).join('');
+  
+  
   let createdAt = message.createdAt;
+  let timeAgo = jQuery.timeago(createdAt);
   createdAt = new Date(encodeHTML(createdAt)).toString();
-  let roomName = message.roomName;
-  
-  
-  $( '#chats' ).append(
-    `<div class='message'>
-      <h1 class=' username'>${encodeHTML(messageUsername)}</h1>
-      <p>${encodeHTML(messageText)}</p>
-      <p>${createdAt}</p>
+  createdAt = moment(createdAt).format('dddd, MMMM Do YYYY, h:mm:ss a');
+  let roomName = JSON.stringify(message.roomname);
+
+  $('#chats').append(
+    `<div class='message animated zoomInRight'>
+      <h1 class='username'>${encodeHTML(messageUsername)}</h1>
+      <p class='messagetext'>${encodeHTML(messageText)}</p>
+      <div class='messagetime'>
+        <p class='messagetimestamp'>${createdAt}</p>
+        <p class='messagetimeago'>${timeAgo}</p>
+      </div>
+      <h1 class='roomname'>${roomName}</h1>
+      <h1 class='chatter'>chatted in room</h1>
     </div>`);
 };
 
@@ -95,55 +117,57 @@ App.prototype.handleSubmit = function () {
 // create app
 let app = new App();
 app.fetch();
-$(document).on('click', '.username', () => {
-  app.handleUsernameClick();
-});
-
-$(document).on('submit', '.submit', () => {
-  app.handleSubmit();
-});
-
-
 
 $(document).ready(function() {
-  console.log( 'document loaded' );
+    
+  $(document).on('click', '.username', () => {
+    app.handleUsernameClick();
+  });
 
-  setTimeout(() => {
-      
-    for (let i = 0; i < messages.results.length; i++) {
-      app.renderMessage(messages.results[i]);
+  $(document).on('submit', '.submit', () => {
+    app.handleSubmit();
+  });
+
+  $(document).on('click', '.username', (e) => {
+    let selectedValue = e.target.innerHTML;
+    createFriend(selectedValue);
+  });
+  
+  // handle room select
+  $(document).on('change', '#select', (e) => {
+    let selectedValue = e.target[e.target.selectedIndex].text;
+    let filteredByRoom;
+    if (selectedValue === 'All') {
+      filteredByRoom = messages.results;
+    } else {
+      filteredByRoom = searchByQuery('roomname', selectedValue);
     }
     
-    $('.submit').on('click', () => {
-      app.handleSubmit();
-    });
+    // clear messages
+    app.clearMessages();
     
-    let rooms = createRooms();
-    rooms.forEach((room) => {
-      $('#select').append(`
-        <option id='${room}" value='${room}'>${room}</option>
-        `);
-    });
+    // rerender only room messages
+    for (let i = 0; i < filteredByRoom.length; i++) {
+      app.renderMessage(filteredByRoom[i]);
+    }
     
-    var roomSelect = $("#select");
+    // change text of message send form 
+    $('#roomvalue').val(selectedValue);
+  });
+  
+  // new message submission click handler
+  $('.submit').on('click', () => {
+    app.handleSubmit();
+  });
+    
 
-    $(document).on('change', '#select', (e) => {
-      let selectedValue = e.target[e.target.selectedIndex].text;
-      let filteredByRoom;
-      if (selectedValue === 'All') {
-        filteredByRoom = messages.results;
-      } else {
-        filteredByRoom = searchByQuery('roomname', selectedValue);
-      }
-      app.clearMessages();
-      for (let i = 0; i < filteredByRoom.length; i++) {
-        app.renderMessage(filteredByRoom[i]);
-      }
-      
-      // change text of message send form 
-      $('#roomvalue').val(selectedValue);
-    });
     
-  }, 750);
+  // var roomSelect = $("#select");
+    
+  // fetch new messages periodically
+  setInterval(() => {
+    app.fetch();
+  }, 10000);
+
 });
 
