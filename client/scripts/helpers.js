@@ -1,5 +1,7 @@
 $( window ).on( "load", function() {
     console.log( "window loaded" );
+    
+
 });
 
 let fetchSuccess = (data) => {
@@ -34,5 +36,4 @@ let createRooms = () => {
   let unique = [...new Set(rooms)]; 
   return unique;
 }
-
 

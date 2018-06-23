@@ -75,10 +75,6 @@ describe('chatterbox', function() {
         app.fetch();
         expect($.ajax.calledOnce).to.be.true;
         ajaxUrl = typeof $.ajax.args[0][0] === 'string' ? $.ajax.args[0][0] : $.ajax.args[0][0].url;
-
-        console.log(ajaxUrl);
-        console.log(app.server);
-        
         expect(ajaxUrl).to.equal(app.server);
         done();
       });
@@ -123,7 +119,6 @@ describe('chatterbox', function() {
         });
 
         app.init();
-        console.log($('#chats').find('.username'));
         $('#chats').find('.username').trigger('click');
         expect(app.handleUsernameClick.called).to.be.true;
 

@@ -54,14 +54,15 @@ App.prototype.renderMessage = function (message) {
   let messageUsername = message.username;
   let messageText = message.text;
   let createdAt = message.createdAt;
+  createdAt = new Date(encodeHTML(createdAt)).toString();
   let roomName = message.roomName;
   
   
   $( "#chats" ).append(
     `<div class='message'>
-      <h1 class='username'>${encodeHTML(messageUsername)}</h1>
+      <h1 class=' username'>${encodeHTML(messageUsername)}</h1>
       <p>${encodeHTML(messageText)}</p>
-      <p>${encodeHTML(createdAt)}</p>
+      <p>${createdAt}</p>
     </div>`);
 }
 
@@ -72,36 +73,37 @@ App.prototype.renderRoom = function (roomName) {
 
 // handle a click
 App.prototype.handleUsernameClick = function () {
-  $('#chats').on('click', '.username', () => {
-    console.log('clicked');
-  })
+
 }
 
 // handle message submission
 App.prototype.handleSubmit = function () {
-  
+  console.log('submit new message');
 }
 
 // create app
 var app = new App();
+app.fetch();
+$(document).on('click', '.username', () => {
+  app.handleUsernameClick();
+})
+
+$(document).on('submit', '.submit', () => {
+  app.handleSubmit();
+})
 
 $(document).ready(function() {
     console.log( "document loaded" );
-    
-    // call for new messages every second
-    // setInterval(() => {
-      // app.fetch()
-    // }, 1000);
 
-    
-    setTimeout(function () {
-      app.fetch();
-
-    })
     setTimeout(() => {
       for (let i = 0; i < messages.results.length; i++) {
         app.renderMessage(messages.results[i]);
       }
-    }, 100);
+      $('.submit').on('submit', (e) => {
+        console.log(e);
+        e.preventDefault();
+        app.handleSubmit();
+      })
+    }, 250);
 });
 
