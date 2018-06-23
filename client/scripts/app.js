@@ -6,7 +6,7 @@ let App = function () {
   this.username;
   this.server = 'http://parse.sfm8.hackreactor.com/chatterbox/classes/messages';
   this.APIparams = {order: '-createdAt'};
-}
+};
 
 // fetch messages from server
 App.prototype.fetch = function() {
@@ -41,12 +41,12 @@ App.prototype.send = function(data) {
 // init app
 App.prototype.init = function () {
 
-}
+};
 
 // clear all messages
 App.prototype.clearMessages = function () {  
-  $( "#chats" ).empty();
-}
+  $( '#chats' ).empty();
+};
 
 // add messages to the DOM
 App.prototype.renderMessage = function (message) {
@@ -58,52 +58,92 @@ App.prototype.renderMessage = function (message) {
   let roomName = message.roomName;
   
   
-  $( "#chats" ).append(
+  $( '#chats' ).append(
     `<div class='message'>
       <h1 class=' username'>${encodeHTML(messageUsername)}</h1>
       <p>${encodeHTML(messageText)}</p>
       <p>${createdAt}</p>
     </div>`);
-}
+};
 
 // render a room to the DOM
 App.prototype.renderRoom = function (roomName) {
-  $( "#roomSelect" ).append(`<div>${JSON.stringify(roomName)}</div>`);
-}
+  $( '#roomSelect' ).append(`<div>${JSON.stringify(roomName)}</div>`);
+};
 
 // handle a click
 App.prototype.handleUsernameClick = function () {
 
-}
+};
 
 // handle message submission
 App.prototype.handleSubmit = function () {
-  console.log('submit new message');
-}
+  console.log('submitting a new message...');
+  let usernamevalue = $( '#usernamevalue' );
+  let roomvalue = $( '#roomvalue' );
+  let messagevalue = $( '#messagevalue' );
+  console.log(usernamevalue, roomvalue, messagevalue);
+  let message = {
+    username: usernamevalue[0].value,
+    text: messagevalue[0].value,
+    roomname: roomvalue[0].value
+  };
+  
+  app.send(message);
+};
 
 // create app
-var app = new App();
+let app = new App();
 app.fetch();
 $(document).on('click', '.username', () => {
   app.handleUsernameClick();
-})
+});
 
 $(document).on('submit', '.submit', () => {
   app.handleSubmit();
-})
+});
+
+
 
 $(document).ready(function() {
-    console.log( "document loaded" );
+  console.log( 'document loaded' );
 
-    setTimeout(() => {
-      for (let i = 0; i < messages.results.length; i++) {
-        app.renderMessage(messages.results[i]);
+  setTimeout(() => {
+      
+    for (let i = 0; i < messages.results.length; i++) {
+      app.renderMessage(messages.results[i]);
+    }
+    
+    $('.submit').on('click', () => {
+      app.handleSubmit();
+    });
+    
+    let rooms = createRooms();
+    rooms.forEach((room) => {
+      $('#select').append(`
+        <option id='${room}" value='${room}'>${room}</option>
+        `);
+    });
+    
+    var roomSelect = $("#select");
+
+    $(document).on('change', '#select', (e) => {
+      let selectedValue = e.target[e.target.selectedIndex].text;
+      let filteredByRoom;
+      if (selectedValue === 'All') {
+        filteredByRoom = messages.results;
+      } else {
+        filteredByRoom = searchByQuery('roomname', selectedValue);
       }
-      $('.submit').on('submit', (e) => {
-        console.log(e);
-        e.preventDefault();
-        app.handleSubmit();
-      })
-    }, 250);
+      app.clearMessages();
+      for (let i = 0; i < filteredByRoom.length; i++) {
+        app.renderMessage(filteredByRoom[i]);
+      }
+      
+      // change text of message send form 
+      $('#roomvalue').val(selectedValue);
+    });
+    
+  }, 750);
 });
 

@@ -9,7 +9,7 @@
     <!-- dependencies -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/underscore/underscore.js"></script>
-    <script>
+<!--     <script>
       // YOU DO NOT NEED TO EDIT THIS CODE
       if (!/(&|\?)username=/.test(window.location.search)) {
         var newSearch = window.location.search;
@@ -19,7 +19,7 @@
         newSearch += 'username=' + (prompt('What is your name?') || 'anonymous');
         window.location.search = newSearch;
       }
-    </script>
+    </script> -->
     <!-- your scripts -->
     <script src="env/config.js"></script>
     <script src="scripts/helpers.js"></script>
@@ -27,8 +27,9 @@
     
   </head>
   <body>
+    
     <div id="main">
-      <h1>chatterbox.io</h1>
+      <h1>chatterbox</h1>
     </div>
     
 
@@ -37,24 +38,24 @@
       
       <div class="select">
         
-      <p>Select a room</p>
+      <p><b>Select a room</b></p>
       
       <select id="select">
-        <option value="4chan">4chan</option>
+        <option id="All" value="All">All</option>
       </select>
       </div>
       
-      <form id="send" action="" method="get">
-        Username<br>
-        <input type="text" name="firstname" value="Nick">
+      <form id="send" action="" method="get" onsubmit="return false">
+        <p><b>Username</b></p><br>
+        <input id="usernamevalue" type="text" name="firstname" value="Nick">
         <br>
-        Room<br>
-        <input type="text" name="lastname" value="4chan">
+        <p><b>Room</b></p><br>
+        <input id="roomvalue" type="text" name="lastname" value="4chan">
         <br>
-        Message<br>
-        <input type="text" name="lastname" value="Test Message">
+        <p><b>Message</b></p><br>
+        <input id="messagevalue" type="text" name="lastname" value="Test Message">
         <br><br>
-        <input class="submit" type="submit" value="Submit">
+        <input id="submit" class="submit" type="submit" value="Submit">
       </form> 
     </div>
   
