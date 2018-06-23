@@ -1,15 +1,48 @@
 body {
     background: #eee;
     text-align: center;
-    padding: 0 25px;
+    /*padding: 0 25px;*/
     font-family: arial, sans-serif;
+    display: grid;  
+    color: #222;
+    /*align-items: center;*/
+    grid-template-columns: [first] .5fr [second] 1fr [third] .5fr [end];
+    grid-template-rows: [first] 25vmin [second] auto [third] 25vmin[end];
 }
 
-#main, #chats {
-    width: 500px;
-    margin: auto;
-    text-align: left;
-    background: white;
+#main {
+    letter-spacing: 3px;
+    font-size: 5vmax;
+    font-weight: bold;
+    grid-column-start: first;
+    grid-column-end: end;
+    grid-row-start: first;
+    grid-row-end: first;
+    text-align: center;
+    align-self: center;
+    background: #fff;
+    color: #222;
+    margin: 2rem;
+    text-align: center;
+    padding: 50px 60px;
+    border: solid #ddd;
+    border-width: 0 1px 1px 1px;
+}
+
+#chats {
+    letter-spacing: 3px;
+    font-size: 3vmax;
+    font-weight: bold;
+    grid-column-start: first;
+    grid-column-end: end;
+    grid-row-start: second;
+    grid-row-end: second;
+    
+    text-align: center;
+    background: #fff;
+    color: #222;
+    margin: 2rem;
+    text-align: center;
     padding: 50px 60px;
     border: solid #ddd;
     border-width: 0 1px 1px 1px;
@@ -17,7 +50,6 @@ body {
 
 #main h1 {
     margin-top: 0;
-    font-size: 35px;
     margin-bottom: 5px;
     padding: 5px;
 }
@@ -86,5 +118,25 @@ form input[type=text] {
 .friend {
     color: #fff;
     background-color: #0090da;
+}
+
+.header-button-partymode {
+  opacity: .85;
+  font-family: "Roboto", sans-serif;
+  grid-column-start: sixth;
+  grid-column-end: end;
+  grid-row-start: second;
+  grid-row-end: second;
+  text-align: center;
+  text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #ff0080, 0 0 30px #ff0080, 0 0 40px #ff0080, 0 0 55px red, 0 0 75px #ff0080;
+}
+
+
+.header {
+
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+  text-decoration: none !important;
 }
 
