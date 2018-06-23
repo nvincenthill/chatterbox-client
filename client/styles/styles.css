@@ -1,20 +1,20 @@
 body {
     --first-color: #222;
-    --second-color: #eee;
+    --second-color: #fff;
     --third-color: red;
     background: var(--first-color);
     font-family: 'Roboto', sans-serif;
     text-align: center;
     font-family: arial, sans-serif;
     display: grid;  
-    color: #222;
+    color: var(--first-color);
     grid-template-columns: [first] .5fr [second] 1fr [third] .5fr [end];
     grid-template-rows: [first] auto [second] auto [third] 25vmin[end];
 }
 
 #main {
     font-family: 'Roboto', sans-serif;
-    font-size: 3vmax;
+    font-size: 2vmax;
     font-weight: bold;
     grid-column-start: first;
     grid-column-end: end;
@@ -33,7 +33,7 @@ body {
 
 #chats {
     font-family: 'Open Sans', sans-serif;
-    font-size: 3vmax;
+    font-size: 1.5vmax;
     font-weight: bold;
     grid-column-start: second;
     grid-column-end: end;
@@ -154,4 +154,8 @@ form input[type=text] {
 
 .send {
     
+}
+
+input {
+    margin-bottom: 1rem;
 }
