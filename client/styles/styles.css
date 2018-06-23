@@ -1,5 +1,6 @@
 body {
     background: #eee;
+    font-family: 'Roboto', sans-serif;
     text-align: center;
     /*padding: 0 25px;*/
     font-family: arial, sans-serif;
@@ -7,12 +8,12 @@ body {
     color: #222;
     /*align-items: center;*/
     grid-template-columns: [first] .5fr [second] 1fr [third] .5fr [end];
-    grid-template-rows: [first] 25vmin [second] auto [third] 25vmin[end];
+    grid-template-rows: [first] auto [second] auto [third] 25vmin[end];
 }
 
 #main {
-    letter-spacing: 3px;
-    font-size: 5vmax;
+    font-family: 'Roboto', sans-serif;
+    font-size: 3vmax;
     font-weight: bold;
     grid-column-start: first;
     grid-column-end: end;
@@ -22,18 +23,18 @@ body {
     align-self: center;
     background: #fff;
     color: #222;
-    margin: 2rem;
+    margin: .5rem .5rem;
     text-align: center;
-    padding: 50px 60px;
+    padding: 1rem 1rem;
     border: solid #ddd;
-    border-width: 0 1px 1px 1px;
+    border-width: 0;
 }
 
 #chats {
-    letter-spacing: 3px;
+    font-family: 'Open Sans', sans-serif;
     font-size: 3vmax;
     font-weight: bold;
-    grid-column-start: first;
+    grid-column-start: second;
     grid-column-end: end;
     grid-row-start: second;
     grid-row-end: second;
@@ -41,11 +42,11 @@ body {
     text-align: center;
     background: #fff;
     color: #222;
-    margin: 2rem;
+    margin: .5rem .5rem;
     text-align: center;
     padding: 50px 60px;
     border: solid #ddd;
-    border-width: 0 1px 1px 1px;
+    border-width: 0;
 }
 
 #main h1 {
@@ -80,7 +81,7 @@ body {
 
 form {
     padding: 20px;
-    padding-left: 0;
+    /*padding-left: 0;*/
     margin-bottom: 20px;
 }
 
@@ -91,14 +92,26 @@ form input[type=text] {
     padding: 5px;
 }
 
+.form {
+    grid-column-start: first;
+    grid-column-end: first;
+    grid-row-start: second;
+    grid-row-end: third;
+    
+    text-align: center;
+    background: #fff;
+    color: #222;
+    margin: .5rem 1rem;
+    text-align: center;
+    padding: 30px 10px;
+    border: solid #ddd;
+    border-width: 0;
+}
+
 .chat {
     padding: 5px;
     margin-bottom: 5px;
     background-color: #eee;
-}
-
-.chat .username {
-    font-weight: 800;
 }
 
 .chat:hover {
@@ -133,10 +146,20 @@ form input[type=text] {
 
 
 .header {
-
-  justify-content: center;
-  align-items: center;
-  padding: 0.5rem;
-  text-decoration: none !important;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem;
+    text-decoration: none !important;
 }
 
+.username {
+    text-align: left;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.message {
+    margin: 10px;
+    padding: .5rem .5rem .5rem .5rem;
+    background: beige;
+}

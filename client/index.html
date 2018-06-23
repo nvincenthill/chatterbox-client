@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>chatterbox</title>
     <link rel="stylesheet" href="styles/styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto" rel="stylesheet">
 
     <!-- dependencies -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
@@ -23,22 +24,37 @@
     <script src="env/config.js"></script>
     <script src="scripts/helpers.js"></script>
     <script src="scripts/app.js"></script>
+    
   </head>
   <body>
     <div id="main">
-      <h1>chatterbox</h1>
+      <h1>chatterbox.io</h1>
     </div>
-    <div>
+    
+
+    
+    <div class='form'>
+      
+      <div class="select">
+      <select>
+        <option value="volvo">4chan</option>
+      </select>
+      </div>
+      
       <form>
-        First name:<br>
-        <input type="text" name="firstname" value="Mickey">
+        Username:<br>
+        <input type="text" name="firstname" value="Nick">
         <br>
-        Last name:<br>
-        <input type="text" name="lastname" value="Mouse">
+        Room:<br>
+        <input type="text" name="lastname" value="4chan">
+        <br>
+        Message:<br>
+        <input type="text" name="lastname" value="Test Message">
         <br><br>
-        <input type="submit" value="Submit">
+        <input type="button" value="Submit">
       </form> 
     </div>
+  
     <div id="chats"></div>
   </body>
 </html>

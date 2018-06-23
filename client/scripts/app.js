@@ -5,14 +5,15 @@ let messages = [];
 let App = function () {
   this.username;
   this.server = 'http://parse.sfm8.hackreactor.com/chatterbox/classes/messages';
-  this.APIFetchparams = ''; // '/where={"createAt":{"$gte":1000,"$lte":0}}'
+  this.APIparams = {order: '-createdAt'};
 }
 
 // fetch messages from server
 App.prototype.fetch = function() {
   console.log('fetching data...');
   $.ajax({
-    url: this.server + this.APIFetchparams,
+    url: this.server,
+    data: this.APIparams,
     type: 'GET',
     dataType: 'json',
     contentType: 'application/json',
@@ -57,10 +58,10 @@ App.prototype.renderMessage = function (message) {
   
   
   $( "#chats" ).append(
-    `<div>
-      <h1 class='username'>${messageUsername}</h1>
-      <p>${messageText}</p>
-      <p>${createdAt}</p>
+    `<div class='message'>
+      <h1 class='username'>${encodeHTML(messageUsername)}</h1>
+      <p>${encodeHTML(messageText)}</p>
+      <p>${encodeHTML(createdAt)}</p>
     </div>`);
 }
 
@@ -101,6 +102,6 @@ $(document).ready(function() {
       for (let i = 0; i < messages.results.length; i++) {
         app.renderMessage(messages.results[i]);
       }
-    }, 1000);
+    }, 100);
 });
 
